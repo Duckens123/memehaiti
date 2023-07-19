@@ -15,8 +15,19 @@ import dj_database_url
 from decouple import config
 import os
 from dotenv import load_dotenv
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 load_dotenv()
 
+
+#Cloudinary configuration
+cloudinary.config( 
+  cloud_name = "dlsisksvi", 
+  api_key = "225581542436542", 
+  api_secret = "WKQeu5vzSD5PhRVn1unNavuo6lQ",
+  secure = True
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
