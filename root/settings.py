@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'memehaiti',
     'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [

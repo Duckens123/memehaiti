@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics,permissions
 from .models import Category, Keyword, Meme, User, Comment, Like, Share, GeneratedMeme
 from .serializers import (
     CategorySerializer,
@@ -11,6 +11,16 @@ from .serializers import (
     ShareSerializer,
     GeneratedMemeSerializer,
 )
+
+class IsAuthenticatedUser(permissions.BasePermission):
+    def has_permission(self, request, view):
+        # Vérifie si l'utilisateur est authentifié
+        is_authenticated = super().has_permission(request, view)
+        
+        # Vérifie si le jeton JWT est présent dans l'en-tête Authorization
+        has_jwt = 'Authorization' in request.headers and 'Bearer' in request.headers['Authorization']
+        
+        return is_authenticated and has_jwt
 
 
 class CategoryListAPIView(generics.ListAPIView):
@@ -46,11 +56,13 @@ class MemeDetailAPIView(generics.RetrieveAPIView):
 class UserListAPIView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticatedUser]
 
 
 class UserDetailAPIView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticatedUser]
 
 
 class CommentListAPIView(generics.ListAPIView):
