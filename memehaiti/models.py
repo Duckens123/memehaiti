@@ -1,5 +1,6 @@
 from django.db import models
 from django.db import models
+from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 
 
@@ -23,7 +24,7 @@ class Meme(models.Model):
     title = models.CharField(max_length=255)
     file = CloudinaryField('file')
     format = models.CharField(max_length=255)
-    creator = models.ForeignKey('User', on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     categories = models.ManyToManyField(Category)
     keywords = models.ManyToManyField(Keyword)
